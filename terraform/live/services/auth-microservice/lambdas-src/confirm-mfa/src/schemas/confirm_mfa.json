@@ -1,0 +1,30 @@
+{
+  "definitions": {}, 
+  "$schema": "http://json-schema.org/draft-07/schema#", 
+  "type": "object", 
+  "title": "New MFA confirmation Schema", 
+  "required": [
+    "email", 
+    "otp"
+  ],
+  "properties": {
+    "email": {
+      "$id": "#/properties/email", 
+      "type": "string", 
+      "title": "The user name", 
+      "examples": [
+        "tarek@lostinmac.com"
+      ]
+    },
+    "otp": {
+      "$id": "#/properties/otp", 
+      "type": "string", 
+      "pattern": "^[0-9]{6}$",
+      "title": "The MFA otp", 
+      "examples": [
+        "123456"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

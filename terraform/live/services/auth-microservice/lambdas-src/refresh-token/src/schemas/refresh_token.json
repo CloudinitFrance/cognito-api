@@ -1,0 +1,29 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "User Login With Refresh Token Schema",
+  "required": [
+    "email",
+    "refresh_token"
+  ],
+  "properties": {
+    "email": {
+      "$id": "#/properties/email",
+      "type": "string",
+      "title": "The user email",
+      "examples": [
+        "tarek@lostinmac.com"
+      ]
+    },
+    "refresh_token": {
+      "$id": "#/properties/refresh_token",
+      "type": "string",
+      "title": "The user refresh token",
+      "examples": [
+        "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

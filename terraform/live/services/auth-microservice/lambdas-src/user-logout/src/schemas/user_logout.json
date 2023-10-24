@@ -1,0 +1,29 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "User Logout Schema",
+  "required": [
+    "email",
+    "access_token"
+  ],
+  "properties": {
+    "email": {
+      "$id": "#/properties/email",
+      "type": "string",
+      "title": "The user email",
+      "examples": [
+        "tarek@lostinmac.com"
+      ]
+    },
+    "access_token": {
+      "$id": "#/properties/access_token",
+      "type": "string",
+      "title": "The user access token",
+      "examples": [
+        "eyJraWQiOiJBSUMzcVwvaGwzTmhQWTJqZzF"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

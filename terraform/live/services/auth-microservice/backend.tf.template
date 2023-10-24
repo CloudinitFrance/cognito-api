@@ -1,0 +1,10 @@
+# https://www.terraform.io/docs/configuration/terraform.html#description
+terraform {
+  backend "s3" {
+    bucket         = "{%TERRAFOM_STATE_BUCKET%}"
+    key            = "{%TERRAFOM_STATE_FILE_KEY%}"
+    encrypt        = "true"
+    region         = "eu-west-1"
+    dynamodb_table = "terraform-lock-states"
+  }
+}

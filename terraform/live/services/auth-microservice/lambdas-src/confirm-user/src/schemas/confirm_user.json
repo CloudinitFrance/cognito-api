@@ -1,0 +1,38 @@
+{
+  "definitions": {}, 
+  "$schema": "http://json-schema.org/draft-07/schema#", 
+  "type": "object", 
+  "title": "New user confirmation Schema", 
+  "required": [
+    "email", 
+    "temporary_password", 
+    "new_password"
+  ],
+  "properties": {
+    "email": {
+      "$id": "#/properties/email", 
+      "type": "string", 
+      "title": "The user name", 
+      "examples": [
+        "tarek@lostinmac.com"
+      ]
+    },
+    "temporary_password": {
+      "$id": "#/properties/temporary_password", 
+      "type": "string", 
+      "title": "The user temporary password", 
+      "examples": [
+        "My!TempPass1?"
+      ]
+    }, 
+    "new_password": {
+      "$id": "#/properties/new_password", 
+      "type": "string", 
+      "title": "The user password", 
+      "examples": [
+        "Il0veThis!Password?"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

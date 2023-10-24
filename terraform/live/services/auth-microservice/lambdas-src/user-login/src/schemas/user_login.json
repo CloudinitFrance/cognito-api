@@ -1,0 +1,29 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "User Login Schema",
+  "required": [
+    "email",
+    "password"
+  ],
+  "properties": {
+    "email": {
+      "$id": "#/properties/email",
+      "type": "string",
+      "title": "The user email",
+      "examples": [
+        "tarek@lostinmac.com"
+      ]
+    },
+    "password": {
+      "$id": "#/properties/password",
+      "type": "string",
+      "title": "The user password",
+      "examples": [
+        "pASSW0rds7r:"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

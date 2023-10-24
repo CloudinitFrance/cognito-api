@@ -1,0 +1,157 @@
+# Provider
+aws-region=""
+
+# Terraform state bucket
+terraform-state-bucket=""
+
+# ACM Certificates
+auth-api-dns-name = ""
+auth-api-acm-certificate-name = ""
+route53-zone-name = ""
+certificate-name-tag = ""
+
+# Auth Api Gateway
+api-cloudwatch-log-group-name = "auth-api-gw-cw-logs"
+apigw-account-settings-cloudwatch-role-name = "auth-api-gw-cw-settings-role"
+apigw-account-settings-cloudwatch-policy-name = "auth-api-gw-cw-settings-policy"
+auth-api-name = ""
+auth-api-description = ""
+auth-api-r53-zone-id = ""
+auth-api-version = "v1"
+cognito-authorizer-name = "auth-cognito-authorizer" 
+auth-api-stage-name = ""
+
+### AUTH MICROSERVICE
+# Auth Microservice Terraform state file
+auth-microservice-terraform-state-file-key = "prod/auth-microservice.tfstate"
+
+# S3
+auth-mfa-bucket-name = ""
+layers-packages-bucket-name = ""
+
+# Cognito User Pool
+user-pool-name = "authentication-api-pool"
+password-minimum-length = "14"
+password-require-lowercase = "true"
+password-require-numbers = "true"
+password-require-symbols = "true"
+password-require-uppercase = "true"
+mfa-configuration = "ON"
+user-pool-client-name = "apigw-client"
+refresh-token-validity = "30"
+enable-token-revocation = "true"
+cognito-sns-role-name = "authentication-api-pool-sns-role"
+identity-pool-name = "authentication-api-idp"
+cognito-reply-to-email-address = ""
+cognito-from-email-address = ""
+cognito-ses-email-arn = ""
+new-user-email-message-template-file = "email_templates/user_invitation_email_prod.html"
+
+# Cognito Custom Message Trigger Lambda
+custom-message-lambda-function-name = "cognito-custom-message-trigger"
+custom-message-lambda-entrypoint = "custom_message.handler"
+custom-message-lambda-function-desc = "Cognito Custom Message Trigger Lambda"
+custom-message-lambda-memory-size = "256"
+custom-message-lambda-runtime = "nodejs14.x"
+custom-message-lambda-timeout = "10"
+custom-message-lambda-zip-src-path = "lambdas-src/custom-message/src"
+
+# Lambdas
+# Common params for auth microservice
+auth-lambdas-runtime = "python3.9"
+auth-lambdas-timeout = "30"
+auth-lambdas-memory-size = "256"
+
+# Resend confirmation code
+resend-confirmation-code-lambda-function-name = "resend-confirmation-code" 
+resend-confirmation-code-lambda-function-desc = "Resend new user confirmation code"
+resend-confirmation-code-lambda-entrypoint = "resend_confirmation_code.lambda_handler"
+resend-confirmation-code-lambda-zip-src-path = "lambdas-src/resend-confirmation-code/src"
+
+# Resend MFA
+resend-mfa-lambda-function-name = "resend-mfa"
+resend-mfa-lambda-function-desc = "Resend user MFA QR code"
+resend-mfa-lambda-entrypoint = "resend_mfa.lambda_handler"
+resend-mfa-lambda-zip-src-path = "lambdas-src/resend-mfa/src"
+users-mfa-folder = "users_mfa"
+from-email = "tarek@tocconsulting.fr"
+
+# User first step authentication process
+user-login-lambda-function-name = "user-login"
+user-login-lambda-function-desc = "Perform the first step of the MFA authentication process"
+user-login-lambda-entrypoint = "user_login.lambda_handler"
+user-login-lambda-zip-src-path = "lambdas-src/user-login/src"
+
+# User second step authentication process
+mfa-verify-lambda-function-name = "mfa-verify"
+mfa-verify-lambda-function-desc = "Perform the verification step of the MFA authentication process"
+mfa-verify-lambda-entrypoint = "mfa_verify.lambda_handler"
+mfa-verify-lambda-zip-src-path = "lambdas-src/mfa-verify/src"
+
+# Refresh token
+refresh-token-lambda-function-name = "refresh-token"
+refresh-token-lambda-function-desc = "Get credentials from the refresh token"
+refresh-token-lambda-entrypoint = "refresh_token.lambda_handler"
+refresh-token-lambda-zip-src-path = "lambdas-src/refresh-token/src"
+
+# User logout
+user-logout-lambda-function-name = "user-logout"
+user-logout-lambda-function-desc = "Perform the user logout process"
+user-logout-lambda-entrypoint = "user_logout.lambda_handler"
+user-logout-lambda-zip-src-path = "lambdas-src/user-logout/src"
+
+# Create user
+create-user-lambda-function-name = "create-user"
+create-user-lambda-function-desc = "Create a new user"
+create-user-lambda-entrypoint = "create_user.lambda_handler"
+create-user-lambda-zip-src-path = "lambdas-src/create-user/src"
+
+# Change password
+change-password-lambda-function-name = "change-password"
+change-password-lambda-function-desc = "Change the user password"
+change-password-lambda-entrypoint = "change_password.lambda_handler"
+change-password-lambda-zip-src-path = "lambdas-src/change-password/src"
+
+# Confirm user
+confirm-user-lambda-function-name = "confirm-user"
+confirm-user-lambda-function-desc = "Confirm the newly created user"
+confirm-user-lambda-entrypoint = "confirm_user.lambda_handler"
+confirm-user-lambda-zip-src-path = "lambdas-src/confirm-user/src"
+
+# Confirm mfa
+confirm-mfa-lambda-function-name = "confirm-mfa"
+confirm-mfa-lambda-function-desc = "Confirm the setup of the new MFA"
+confirm-mfa-lambda-entrypoint = "confirm_mfa.lambda_handler"
+confirm-mfa-lambda-zip-src-path = "lambdas-src/confirm-mfa/src"
+
+# Forgot user password
+forgot-password-lambda-function-name = "forget-user-password"
+forgot-password-lambda-function-desc = "Forget user password"
+forgot-password-lambda-entrypoint = "forgot_password.lambda_handler"
+forgot-password-lambda-zip-src-path = "lambdas-src/forgot-password/src"
+
+# Confirm password
+confirm-password-lambda-function-name = "confirm-password"
+confirm-password-lambda-function-desc = "Confirm user password"
+confirm-password-lambda-entrypoint = "confirm_password.lambda_handler"
+confirm-password-lambda-zip-src-path = "lambdas-src/confirm-password/src"
+
+# Rest password
+reset-password-lambda-function-name = "reset-password"
+reset-password-lambda-function-desc = "Reset user password"
+reset-password-lambda-entrypoint = "reset_password.lambda_handler"
+reset-password-lambda-zip-src-path = "lambdas-src/reset-password/src"
+
+# User Infos
+userinfo-lambda-function-name = "userinfo"
+userinfo-lambda-function-desc = "Get user infos"
+userinfo-lambda-entrypoint = "userinfo.lambda_handler"
+userinfo-lambda-zip-src-path = "lambdas-src/userinfo/src"
+
+# Delete user
+delete-user-lambda-function-name = "delete-user"
+delete-user-lambda-function-desc = "Delete user"
+delete-user-lambda-entrypoint = "delete_user.lambda_handler"
+delete-user-lambda-zip-src-path = "lambdas-src/delete-user/src"
+
+### Globals

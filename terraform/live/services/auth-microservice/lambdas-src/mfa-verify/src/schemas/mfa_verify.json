@@ -1,0 +1,48 @@
+{
+  "definitions": {}, 
+  "$schema": "http://json-schema.org/draft-07/schema#", 
+  "type": "object", 
+  "title": "MFA Verification Schema", 
+  "required": [
+    "email",
+    "verification_type",
+    "verification_session",
+    "otp_code"
+  ], 
+  "properties": {
+    "email": {
+      "$id": "#/properties/email",
+      "type": "string",
+      "title": "User Email",
+      "examples": [
+        "the-42-user@42mail.com"
+      ]
+    },
+    "verification_type": {
+      "$id": "#/properties/verification_type", 
+      "type": "string", 
+      "title": "MFA Verification type",
+      "examples": [
+	"SOFTWARE_TOKEN_MFA"
+      ],
+      "enum": ["SOFTWARE_TOKEN_MFA", "SMS_MFA"]
+    }, 
+    "otp_code": {
+      "$id": "#/properties/otp_code",
+      "type": "string",
+      "title": "MFA One Time Password",
+      "examples": [
+        "424242"
+      ]
+    },
+    "verification_session": {
+      "$id": "#/properties/verification_session",
+      "type": "string",
+      "title": "MFA verification session",
+      "examples": [
+        "yrKeh0tDL6JCBju4KUGfZdMbjjRP8VC0V9ZH9bWaAplM1TzJ3cO7boUG__"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
