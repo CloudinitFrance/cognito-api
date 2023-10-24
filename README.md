@@ -34,6 +34,8 @@ First you need to configure at least one deployment environement, let's call it 
 
 And here is the explanation of the relevant parameters:
 
+- **aws-region**: The region where to deploy your authentication API.
+
 - **terraform-state-bucket**: This S3 bucket will hold your terraform states files. We are expecting a name and the IAC will create this bucket and use it.
 
 - **auth-api-dns-name**: This is the dns to use for your API, for example: **auth.dev.thecadors.com**.
@@ -61,6 +63,8 @@ And here is the explanation of the relevant parameters:
 - **cognito-ses-email-arn**: The ARN of the SES verified email identity to use, for example: **arn:aws:ses:eu-west-1:012345678901:identity/hello@myapp.io**.
 
 - **from-email**: This will be used by the CognitoApi to resend for you your MFA Qrcode, for example: **hello@myapp.io**.
+
+- **layers-packages-bucket-name**: The name of the S3 bucket where to upload the lambdas layers ZIPs.
 
 The process of installation is as follow:
 
@@ -117,7 +121,7 @@ It's hard, because it depends on the context of everyone, but let's use the thes
 
 - The deployment region is **eu-west-1**.
 
-- Let's assume 50K users and all of them perform a login (2 requests) everyday on the app (the RefreshToken is valid for 24 hours, so the app can use it to refresh the user session), that's mean 24 requests, so in total: 26 requests per user per day, which means: 1.3 millions requests for maintaing sessions on a daily basis. This also means that users are connected 24 hours per day all time (very unlikly to heppen).
+- Let's assume **50K users** and all of them perform a login (2 requests) everyday on the app (the RefreshToken is valid for 24 hours, so the app can use it to refresh the user session), that's mean 24 requests, so in total: 26 requests per user per day, which means: 1.3 millions requests for maintaing sessions on a daily basis. This also means that users are connected 24 hours per day all time (very unlikly to heppen).
 
 - Let's assume that all backend lambdas uses **256MB** of memory and for each call the average duration of each lambda is 1 second (which is excessive!). They will be called 1.3 million every day.
 
@@ -152,7 +156,21 @@ We did a lot of technical choices inside this project:
 > **Warning**
 All endpoints needs the header: x-api-key which must be set by generating an API Key inside your AWS Api Gateway and associate it with your deployment stage and a usage plan.
 
-You can find a Postman collection here: **postman/CognitoApi.postman_collection.json**. Let's see how this API works:
+You can find a Postman collection here: **postman/CognitoApi.postman_collection.json**. You need to set the following variables inside Postman:
+
+- API_BASE_URL: which is the dns name to use to call your auth api.
+
+- API_KEY: should be the one that you will generate for your tests inside the API Gateway.
+
+- EMAIL: the email of the user you want to create.
+
+- PASSWORD: the password to use when you create a test user.
+
+- VerificationType: must be set to **SOFTWARE_TOKEN_MFA**.
+
+The TOTP inside Postman is generated for you automatically using the **MFA_SECRET** environement variable, which is set when from the API call output, once the user has been confirmed.
+
+Let's see how this API works:
 
 ### User Management Lifecycle
 
