@@ -2556,6 +2556,15 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
 									"var jsonData = pm.response.json();",
 									"pm.environment.set(\"USER_ID\", jsonData.user_id);"
 								],
@@ -2619,7 +2628,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"temporary_password\": \"#Y3KdGR9QKg_a8\",\n    \"new_password\": \"#Y3KdGR9QKg_a9\"\n}",
+							"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"temporary_password\": \"8YRMtDt2Gpym*Y\",\n    \"new_password\": \"#Y3KdGR9QKg_a9\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2654,7 +2663,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"otp\": \"845139\"\n}",
+							"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"otp\": \"328802\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
