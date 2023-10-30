@@ -106,13 +106,13 @@ The deployed infrastructure looks like this:
 
 - 6 Lambdas layers.
 
-- 3 S3 buckets: for terraform infrastructure and MFA storing. 
+- 2 S3 buckets: for terraform infrastructure and MFA storing. 
 
 - 1 DynamoDB table for terraform infrastructure collaboration lock. 
 
 - 1 ACM Certificate for the Rest API.
 
-- 2 Route53 records.
+- 2 Route53 records for the ACM verification and the API custom domain.
 
 
 ## Cost estimation
@@ -158,23 +158,23 @@ All endpoints needs the header: x-api-key which must be set by generating an API
 
 You can find a Postman collection here: **postman/CognitoApi.postman_collection.json**. You need to set the following variables inside Postman:
 
-- API_BASE_URL: which is the dns name to use to call your auth api.
+- **API_BASE_URL**: which is the dns name to use to call your auth api.
 
-- API_KEY: should be the one that you will generate for your tests inside the API Gateway.
+- **API_KEY**: should be the one that you will generate for your tests inside the API Gateway.
 
-- EMAIL: the email of the user you want to create.
+- **EMAIL**: the email of the user you want to create.
 
-- PASSWORD: the password to use when you create a test user.
+- **PASSWORD**: the password to use when you create a test user.
 
-- VerificationType: must be set to **SOFTWARE_TOKEN_MFA**.
+- **VerificationType**: must be set to **SOFTWARE_TOKEN_MFA**.
 
-The TOTP inside Postman is generated for you automatically using the **MFA_SECRET** environement variable, which is set when from the API call output, once the user has been confirmed.
+The TOTP inside Postman is generated for you automatically using the **MFA_SECRET** environement variable, which is set from the API call output, once the user has been confirmed.
 
 Let's see how this API works:
 
 ### User Management Lifecycle
 
-- Create a new user: Use a **POST** method on the endpoint: **v1/users** with the payload:
+- **Create a new user**: Use a **POST** method on the endpoint: **v1/users** with the payload:
 
 ```json
 {
@@ -199,7 +199,7 @@ After this call the new user will receive an email containing a temporary passwo
 ![Create User API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/01-CreateUser.png?raw=true)
 ![Create User Email](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/02-CreateUser-Email.png?raw=true)
 
-- Confirm a new: Use a **POST** method on the endpoint: **v1/users/{{USER_ID}}/confirm** with the payload:
+- **Confirm a new user**: Use a **POST** method on the endpoint: **v1/users/{{USER_ID}}/confirm** with the payload:
 
 ```json
 {
@@ -223,7 +223,7 @@ And you will get an answer that looks like this:
 
 ![Confirm New User API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/03-ConfirmNewUser.png?raw=true)
 
-- Confirm the MFA: Use a **POST** method on the endpoint: **v1/users/{{USER_ID}}/confirm-mfa** with the payload:
+- **Confirm the MFA**: Use a **POST** method on the endpoint: **v1/users/{{USER_ID}}/confirm-mfa** with the payload:
 
 ```json
 {
@@ -244,7 +244,7 @@ And you will get an answer that looks like this:
 
 ![Confirm The New MFA API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/04-ConfirmMFA.png?raw=true)
 
-- For a forgotten password: Use a **POST** method on the endpoint: **v1/forgot-password** with the payload: 
+- **For a forgotten password**: Use a **POST** method on the endpoint: **v1/forgot-password** with the payload: 
 
 ```json
 {
@@ -265,7 +265,7 @@ And you will get an answer that looks like this:
 ![Forgot Password API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/05-ForgotPassword.png?raw=true)
 ![Forgot Password Email](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/06-ForgotPassword-Email.png?raw=true)
 
-- To set a forgotten password: Use a **POST** method on the endpoint: **/v1/users/{{USER_ID}}/confirm-password** with the payload: 
+- **To set a forgotten password**: Use a **POST** method on the endpoint: **/v1/users/{{USER_ID}}/confirm-password** with the payload: 
 
 ```json
 {
@@ -289,7 +289,7 @@ And you will get an answer that looks like this:
 
 ### User Authentication
 
-- Perform the first step of the login process: Use a **POST** method on the endpoint: **v1/login** with the payload:
+- **Perform the first step of the login process**: Use a **POST** method on the endpoint: **v1/login** with the payload:
 
 ```json
 {
@@ -312,7 +312,7 @@ And you will get an answer that looks like this:
 
 After this call, the user needs to perform the MFA verification step using the verification session.
 
-- Perform the second step of the login process (MFA challenge): Use a **POST** method on the endpoint: **v1/mfa-verify** with the payload:
+- **Perform the second step of the login process (MFA challenge)**: Use a **POST** method on the endpoint: **v1/mfa-verify** with the payload:
 
 ```json
 {
@@ -338,7 +338,7 @@ And you will get an answer that looks like this:
 
 At this moment, the user has been logged successfully.
 
-- To get new tokens using your RefreshToken: Use a **POST** method on the endpoint: **v1/refresh-token** with the payload:
+- **To get new tokens using your RefreshToken**: Use a **POST** method on the endpoint: **v1/refresh-token** with the payload:
 
 ```json
 {
@@ -361,7 +361,7 @@ And you will get an answer that looks like this:
 
 ![RefreshToken API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/10-RefreshToken.png?raw=true)
 
-- To get informations about the connected user: Use a **GET** method on the endpoint: **v1/userinfo** and you will get an answer that looks like this:
+- **To get informations about the connected user**: Use a **GET** method on the endpoint: **v1/userinfo** and you will get an answer that looks like this:
 
 ```json
 {
@@ -375,7 +375,7 @@ And you will get an answer that looks like this:
 
 ![Userinfo API Call](https://github.com/CloudinitFrance/cognito-api/blob/main/assets/11-Userinfo.png?raw=true)
 
-- To logout: Use a **POST** method on the endpoint: **v1/logout** with the payload:
+- **To logout**: Use a **POST** method on the endpoint: **v1/logout** with the payload:
 
 ```json
 {
