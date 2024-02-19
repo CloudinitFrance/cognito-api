@@ -30,7 +30,7 @@ Before installing the CognitoApi, please ensure that you already installed:
 ## Installation
 
 > **Warning**
-First you need to configure at least one deployment environement, let's call it dev, by filling the corresponding configuration file **environments/dev/terraform.tfvars.dev**
+First you need to configure at least one deployment environement, let's call it dev, by filling the corresponding configuration file **terraform/environments/dev/terraform.tfvars.dev**
 
 And here is the explanation of the relevant parameters:
 
