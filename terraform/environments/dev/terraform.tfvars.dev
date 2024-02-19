@@ -52,7 +52,7 @@ custom-message-lambda-function-name = "cognito-custom-message-trigger"
 custom-message-lambda-entrypoint = "custom_message.handler"
 custom-message-lambda-function-desc = "Cognito Custom Message Trigger Lambda"
 custom-message-lambda-memory-size = "256"
-custom-message-lambda-runtime = "nodejs14.x"
+custom-message-lambda-runtime = "nodejs18.x"
 custom-message-lambda-timeout = "10"
 custom-message-lambda-zip-src-path = "lambdas-src/custom-message/src"
 
