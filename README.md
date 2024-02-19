@@ -79,7 +79,7 @@ ENVIRONMENT=dev make apply
 
 The last commands will:
 
-- Set up your AWS porfile by exporting it inside the terminal, please change the name of the profile **MyAwsDevProfile** to yours.
+- Set up your AWS porfile by exporting it inside the terminal, please change the name of the profile **MyAwsDevProfile** to yours and set it also inside the file **terraform/live/services/auth-microservice/provider.tf**.
 
 - Test the terfform infrastructure files.
 
