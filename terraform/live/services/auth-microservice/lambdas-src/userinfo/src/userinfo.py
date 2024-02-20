@@ -4,7 +4,6 @@
 import os
 import json
 import collections
-import boto3
 import jwt
 import constants
 import log
@@ -24,33 +23,6 @@ def is_invoked_by_lambda_warmer(event):
             return False
 
 
-def get_userinfo(claims, conf_values):
-    '''Get user infos'''
-    try:
-        cup_client = boto3.client('cognito-idp', conf_values['REGION'])
-        response = cup_client.admin_get_user(
-            UserPoolId=conf_values['COGNITO_USER_POOL_ID'],
-            Username=claims['cognito:username']
-        )
-        if 'Username' in response:
-            user_id = response['Username']
-        else:
-            user_id = None
-        email = None
-        name = None
-        print(response)
-        for attr in response['UserAttributes']:
-            if attr['Name'] == 'name':
-                name = attr['Value']
-            elif attr['Name'] == 'email':
-                email = attr['Value']
-            else:
-                pass
-        return user_id, name, email
-    except Exception as error:
-        raise Exception('Error: {}'.format(error))
-
-
 def get_claims(jwt_token):
     '''Extract claims from the JWT token'''
     try:
@@ -64,22 +36,29 @@ def get_claims(jwt_token):
     return decode
 
 
-def build_api_response(user_id, name, email):
+def build_api_response(claims):
     '''Build the API response'''
     response_body = collections.OrderedDict()
-    response_body['user_id'] = user_id
-    response_body['email'] = email
-    response_body['groups'] = []
-    try:
-        response_body['given_name'] = name.split(' ', 1)[0]
-    except Exception as error:
-        print('[ERROR] no given_name for: ' + user_id)
-        response_body['given_name'] = None
-    try:
-        response_body['family_name'] = name.split(' ', 1)[1]
-    except Exception as error:
-        print('[ERROR] no family_name for: ' + user_id)
-        response_body['family_name'] = None
+    if 'name' in claims:
+        response_body['name'] = claims['name']
+    else:
+        response_body['name'] = None
+    if 'sub' in claims:
+        response_body['user_id'] = claims['sub']
+    else:
+        response_body['user_id'] = None
+    if 'email' in claims:
+        response_body['email'] = claims['email']
+    else:
+        response_body['email'] = None
+    if 'phone_number' in claims:
+        response_body['phone_number'] = claims['phone_number']
+    else:
+        response_body['phone_number'] = None
+    if 'cognito:groups' in claims:
+        response_body['groups'] = claims['cognito:groups']
+    else:
+        response_body['groups'] = []
 
     return response_body
 
@@ -102,14 +81,8 @@ def lambda_handler(event, context):
     try:
         conf_values = init_env_vars()
         claims = get_claims(event['headers']['Authorization'])
-        user_id, name, email = get_userinfo(
-            claims,
-            conf_values
-        )
         response_body = build_api_response(
-            user_id,
-            name,
-            email
+            claims
         )
         return {
             'statusCode': 200,
