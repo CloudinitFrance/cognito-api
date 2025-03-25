@@ -2,6 +2,8 @@
 
 CognitoApi is an authentication and user management api based on the solid AWS Cognito service. It will let's you build your applications without thinking about the authentication part.
 
+A detailed documentation and a dedicated website about this project with a lot of material is located here: [CognitoApi](https://cognito-api.com).
+
 The key features of CognitoApi are:
 
 - **Security**: The solution is very secure and uses MFA (Multi Factor Authentication) which adds an important security layer to your apps.
